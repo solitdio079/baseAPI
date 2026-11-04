@@ -1,0 +1,56 @@
+// use prisma-8
+// Contract inferred from the live database schema. Edit as needed, then run `prisma contract emit`.
+
+namespace public {
+  model User {
+    id        Int                 @id(map: "User_pkey") @default(autoincrement())
+    email     String
+    name      String?
+    createdAt Timestamp(3)  @default(now())
+    pwd       String
+    updatedAt Timestamp(3)?
+    verified  Boolean             @default(false)
+    role      pg.enum(Role)       @default("USER")
+    comments  Comment[]
+    posts     Post[]
+    phone     String?
+
+    @@index([email], map: "User_email_key", unique: true)
+  }
+
+  model Post {
+    id        Int                 @id(map: "Post_pkey") @default(autoincrement())
+    title     String
+    content   String?
+    published Boolean             @default(false)
+    authorId  Int
+    createdAt Timestamp(3)  @default(now())
+    media     String?[]?          @default([])
+    topics    String?[]?          @default([])
+    updatedAt Timestamp(3)?
+    status    pg.enum(Status)     @default("PRIVATE")
+    comments  Comment[]
+    author    User                @relation(fields: [authorId], references: [id], onDelete: Restrict, onUpdate: Cascade, map: "Post_authorId_fkey", index: false)
+  }
+
+  model Comment {
+    id        Int                 @id(map: "Comment_pkey") @default(autoincrement())
+    content   String
+    authorId  Int
+    postId    Int
+    createdAt Timestamp(3)  @default(now())
+    updatedAt Timestamp(3)?
+    author    User                @relation(fields: [authorId], references: [id], onDelete: Restrict, onUpdate: Cascade, map: "Comment_authorId_fkey", index: false)
+    post      Post                @relation(fields: [postId], references: [id], onDelete: Restrict, onUpdate: Cascade, map: "Comment_postId_fkey", index: false)
+  }
+
+  native_enum Role {
+    ADMIN = "ADMIN"
+    USER = "USER"
+  }
+
+  native_enum Status {
+    PRIVATE = "PRIVATE"
+    PUBLIC = "PUBLIC"
+  }
+}
