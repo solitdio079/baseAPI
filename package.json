@@ -21,14 +21,26 @@
   },
   "dependencies": {
     "@prisma/orm-postgres": "^8.0.0-rc.19",
-    "dotenv": "^18.0.8",
+    "argon2": "^0.45.2",
+    "bcrypt": "^6.0.0",
+    "dotenv": "^18.0.9",
     "express": "^5.3.0",
-    "temporal-polyfill": "^1.0.6"
+    "jsonwebtoken": "^9.0.3",
+    "passport": "^0.7.0",
+    "passport-jwt": "^4.0.1",
+    "passport-local": "^1.0.0",
+    "temporal-polyfill": "^1.0.6",
+    "uuid": "^14.0.3",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@prisma/cli-engine": "^0.9.0",
     "@types/express": "^5.0.6",
     "@types/node": "^26.6.5",
+    "@types/passport": "^1.0.17",
+    "@types/passport-jwt": "^4.0.1",
+    "@types/passport-local": "^1.0.38",
+    "nodemon": "^3.1.14",
     "prisma": "^8.0.0-rc.25",
     "tsx": "^4.23.15",
     "typescript": "^7.0.2"
